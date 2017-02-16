@@ -1,11 +1,8 @@
-package de.brainoverload;
+package br.com.bancocbss.parcele;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 
-/**
- * Created by stefan on 29.01.17.
- */
 @WebService
 public class Hello {
 
@@ -13,5 +10,11 @@ public class Hello {
     public String sayHello(String name) {
         System.out.println("Webservice sayHello called...");
         return "Hello " + name;
+    }
+    
+    @WebMethod
+    public String sayHi(String name) {
+        System.out.println("Webservice sayHi called...");
+        return "Hi there, " + name;
     }
 }
