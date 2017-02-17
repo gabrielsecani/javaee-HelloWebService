@@ -6,7 +6,7 @@ import javax.xml.ws.WebServiceRef;
 
 import org.apache.log4j.Logger;
 
-import br.com.bancocbss.parcele.model.Cliente;
+import br.com.bancocbss.parcele.model.viewobject.ClienteVO;
 
 @WebService()
 public class Hello {
@@ -28,16 +28,16 @@ public class Hello {
 	}
 
 	@WebMethod
-	public Cliente Cliente(String name, String sobrenome) {
+	public ClienteVO Cliente(String name, String sobrenome) {
 		logger.info("getCliente"+name+" "+sobrenome);
 		System.out.println("Webservice getCliente called...");
-		return new Cliente(name, sobrenome);
+		return new ClienteVO(name, sobrenome);
 	}
 	
 	@WebMethod
-	public Cliente EchoCliente(Cliente cliente) {
+	public ClienteVO EchoCliente(ClienteVO cliente) {
 		logger.info("echo Cliente");
 		System.out.println("Webservice getCliente called...");
-		return new Cliente(cliente.getSobrenome(), cliente.getNome());
+		return new ClienteVO(cliente.getSobrenome(), cliente.getNome());
 	}
 }

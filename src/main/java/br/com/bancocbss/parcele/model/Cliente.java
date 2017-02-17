@@ -1,16 +1,32 @@
 package br.com.bancocbss.parcele.model;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-@XmlRootElement()
-@XmlAccessorType(XmlAccessType.PROPERTY)
-public class Cliente {
+@Entity(name="TB_CLIENTE")
+public class Cliente{
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Long id;
+	
 	private String nome;
-	private String sobrenome;
 
-	public Cliente() {
+	public Cliente(){ }
+
+	public Cliente(Long id, String nome) {
+		this.id = id;
+		this.nome = nome;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getNome() {
@@ -20,19 +36,5 @@ public class Cliente {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
-	public String getSobrenome() {
-		return sobrenome;
-	}
-
-	public void setSobrenome(String sobrenome) {
-		this.sobrenome = sobrenome;
-	}
-
-	public Cliente(String nome, String sobrenome) {
-		super();
-		this.nome = nome;
-		this.sobrenome = sobrenome;
-	}
-
+	
 }
