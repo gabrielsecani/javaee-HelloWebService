@@ -1,4 +1,4 @@
-package br.com.bancocbss.parecele.business;
+package br.com.bancocbss.parcele.business;
 
 import java.util.concurrent.atomic.AtomicLong;
 

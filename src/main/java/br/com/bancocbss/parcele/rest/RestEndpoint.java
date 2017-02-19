@@ -1,5 +1,6 @@
 package br.com.bancocbss.parcele.rest;
 
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -11,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 import org.apache.log4j.Logger;
 
 import br.com.bancocbss.parcele.model.viewobject.ClienteVO;
+import br.com.bancocbss.parcele.service.IClienteService;
 
 @Path("/teste")
 @Produces({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
@@ -18,6 +20,9 @@ import br.com.bancocbss.parcele.model.viewobject.ClienteVO;
 public class RestEndpoint {
 
 	final static Logger logger = Logger.getLogger(RestEndpoint.class);
+
+    @Inject
+    private IClienteService clienteService;
 
 	@GET
 	@Path("hello")
@@ -43,18 +48,17 @@ public class RestEndpoint {
 	@GET
 	@Path("/cliente/{name}-{sobrenome}")
 	public ClienteVO getCliente(@PathParam("name") String name, @PathParam("sobrenome")String sobrenome) {
-		logger.info("rest getCliente"+name+" "+sobrenome);
+		logger.info("rest getCliente "+name+" "+sobrenome);
 		System.out.println("Rest getCliente called...");
-		return new ClienteVO(name, sobrenome);
+		return clienteService.getClienteVO(name, sobrenome);
 	}
 	
-
 	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
+	@Consumes({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
 	@Path("/echocliente")
 	public ClienteVO EchoCliente(ClienteVO cliente) {
 		logger.info("echo Cliente");
-		System.out.println("Webservice getCliente called...");
+		System.out.println("Rest getCliente called...");
 		cliente.setNome(cliente.getNome()+"..");
 		return cliente;
 	}
