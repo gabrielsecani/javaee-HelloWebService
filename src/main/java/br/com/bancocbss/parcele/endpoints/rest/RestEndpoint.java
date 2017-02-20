@@ -1,4 +1,4 @@
-package br.com.bancocbss.parcele.rest;
+package br.com.bancocbss.parcele.endpoints.rest;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -15,14 +15,16 @@ import br.com.bancocbss.parcele.model.viewobject.ClienteVO;
 import br.com.bancocbss.parcele.service.IClienteService;
 
 @Path("/teste")
-@Produces({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
-@Consumes({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
+@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 public class RestEndpoint {
 
-	final static Logger logger = Logger.getLogger(RestEndpoint.class);
+	// final static Logger logger = Logger.getLogger(RestEndpoint.class);
+	@Inject
+	Logger logger;
 
-    @Inject
-    private IClienteService clienteService;
+	@Inject
+	private IClienteService clienteService;
 
 	@GET
 	@Path("hello")
@@ -44,22 +46,22 @@ public class RestEndpoint {
 		logger.info("sayHi " + name);
 		return "Hello, The name is: " + (name) + "!";
 	}
-	
+
 	@GET
 	@Path("/cliente/{name}-{sobrenome}")
-	public ClienteVO getCliente(@PathParam("name") String name, @PathParam("sobrenome")String sobrenome) {
-		logger.info("rest getCliente "+name+" "+sobrenome);
+	public ClienteVO getCliente(@PathParam("name") String name, @PathParam("sobrenome") String sobrenome) {
+		logger.info("rest getCliente " + name + " " + sobrenome);
 		System.out.println("Rest getCliente called...");
 		return clienteService.getClienteVO(name, sobrenome);
 	}
-	
+
 	@POST
-	@Consumes({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
+	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	@Path("/echocliente")
 	public ClienteVO EchoCliente(ClienteVO cliente) {
 		logger.info("echo Cliente");
 		System.out.println("Rest getCliente called...");
-		cliente.setNome(cliente.getNome()+"..");
+		cliente.setNome(cliente.getNome() + "..");
 		return cliente;
 	}
 }

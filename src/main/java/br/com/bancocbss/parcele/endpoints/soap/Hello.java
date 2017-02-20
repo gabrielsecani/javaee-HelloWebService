@@ -1,5 +1,6 @@
-package br.com.bancocbss.parcele.soap;
+package br.com.bancocbss.parcele.endpoints.soap;
 
+import javax.inject.Inject;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.xml.ws.WebServiceRef;
@@ -10,7 +11,9 @@ import br.com.bancocbss.parcele.model.viewobject.ClienteVO;
 
 @WebService()
 public class Hello {
-	final static Logger logger = Logger.getLogger(Hello.class);
+	//final static Logger logger = Logger.getLogger(Hello.class);
+	@Inject
+	Logger logger;
 
 	@WebMethod
 	public String sayHello(String name) {
