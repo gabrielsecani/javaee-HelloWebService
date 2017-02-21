@@ -15,8 +15,11 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
+import javax.ws.rs.core.UriInfo;
 
 import org.apache.log4j.Logger;
 
@@ -53,14 +56,6 @@ public class ClienteEndpointRest {
 		return Response.ok(clientes).build();
 	}
 
-	@GET
-	@Path("/get-{name}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Cliente getCliente(@PathParam("name") String nome) {
-		log.info("rest getCliente " + nome);
-		return clienteService.getCliente(nome);
-	}
-
     @GET
     @Path("/{id:[0-9][0-9]*}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -83,14 +78,18 @@ public class ClienteEndpointRest {
 	}
 
 	@PUT
-	public Response createCliente(Cliente cliente){
+	public Response createCliente(Cliente cliente, @Context UriInfo uriInfo){
 
         Response.ResponseBuilder builder = null;
 
 		try{
 			clienteService.addCliente(cliente);
             // Create an "ok" response
-            builder = Response.ok();
+
+	        UriBuilder uribuilder = uriInfo.getAbsolutePathBuilder();
+	        uribuilder.path(Long.toString(cliente.getId()));
+			
+			builder = Response.created(uribuilder.build()).entity(cliente);
         } catch (Exception e) {
             // Handle generic exceptions
             Map<String, String> responseObj = new HashMap<>();
