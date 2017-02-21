@@ -8,11 +8,12 @@ import org.apache.log4j.Logger;
 
 @ApplicationPath("/rest")
 public class RestApplication extends Application{
+	
 	@Inject
-	Logger logger;
+	private Logger log;
 
 	public RestApplication() {
 		super();
-		logger.info("Rest application was started.");
+		log.info("-------->  Rest application was started.");
 	}
 }

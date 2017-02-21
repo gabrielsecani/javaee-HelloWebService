@@ -9,7 +9,7 @@ import org.apache.log4j.Logger;
 
 import br.com.bancocbss.parcele.model.viewobject.ClienteVO;
 
-@WebService()
+@WebService
 public class Hello {
 	//final static Logger logger = Logger.getLogger(Hello.class);
 	@Inject
