@@ -2,10 +2,24 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
->
+	xmlns:h="http://java.sun.com/jsf/html">
 
 <h:body>
-    <h1>Parcele API Service is online!</h1>
+	<h1>Parcele API Service is online!</h1>
+
+	<h2>Rest services - teste</h2>
+	<ol>
+		<li>GET <a href="rest/cliente/hello">/rest/cliente/hello</a></li>
+		<li>GET <a href="rest/cliente">/rest/cliente/</a></li>
+		<li>GET <a href="rest/cliente/{id}">/rest/cliente/{id}</a></li>
+		<li>GET <a href="rest/cliente/{name}">/rest/cliente/{name}</a></li>
+		<li>POST <a href="rest/cliente/echo">/rest/cliente/echo</a></li>
+		<li>PUT <a href="rest/cliente/">/rest/cliente/</a></li>
+	</ol>
+
+	<h2>SOAP services - Hello</h2>
+	<ol>
+		<li>WSDL <a href="Hello?wsdl">/Hello?wsdl</a></li>
+	</ol>
 </h:body>
 </html>
