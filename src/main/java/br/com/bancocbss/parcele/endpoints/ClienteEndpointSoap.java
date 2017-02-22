@@ -6,6 +6,7 @@ import javax.jws.WebService;
 
 import org.apache.log4j.Logger;
 
+import br.com.bancocbss.parcele.model.Cliente;
 import br.com.bancocbss.parcele.model.ClienteRepository;
 
 @WebService(serviceName="cliente",name="cliente")
@@ -24,7 +25,7 @@ public class ClienteEndpointSoap {
 	}
 	
 	@WebMethod
-	public br.com.bancocbss.parcele.model.Cliente getCliente(String nome){
+	public Cliente getCliente(String nome){
 		return clienteRepository.findByNome(nome);
 	}
 }

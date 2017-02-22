@@ -11,6 +11,7 @@ import javax.persistence.criteria.Root;
 
 import org.apache.log4j.Logger;
 
+
 @ApplicationScoped
 public class ClienteRepository {
 
@@ -24,10 +25,12 @@ public class ClienteRepository {
 	}
 
 	public Cliente findById(Long id) {
+		log.info("findById("+Long.toString(id)+")");
 		return em.find(Cliente.class, id);
 	}
 
 	public Cliente findByNome(String nome) {
+		log.info("findByNome("+nome+")");
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Cliente> criteria = cb.createQuery(Cliente.class);
 		Root<Cliente> cliente = criteria.from(Cliente.class);
