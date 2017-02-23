@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -52,20 +53,20 @@ public class ClienteEndpointRest {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getClientes() {
 		log.info("rest getClientes ");
-		List<Cliente> clientes = clienteService.getAll(); 
+		List<Cliente> clientes = clienteService.getAll();
 		return Response.ok(clientes).build();
 	}
 
-    @GET
-    @Path("/{id:[0-9][0-9]*}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Cliente lookupClienteById(@PathParam("id") long id) {
-    	Cliente cliente = clienteService.findByID(id);
-        if (cliente == null) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
-        }
-        return cliente;
-    }
+	@GET
+	@Path("/{id:[0-9][0-9]*}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Cliente lookupClienteById(@PathParam("id") long id) {
+		Cliente cliente = clienteService.findByID(id);
+		if (cliente == null) {
+			throw new WebApplicationException(Response.Status.NOT_FOUND);
+		}
+		return cliente;
+	}
 
 	@POST
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -78,26 +79,66 @@ public class ClienteEndpointRest {
 	}
 
 	@PUT
-	public Response createCliente(Cliente cliente, @Context UriInfo uriInfo){
+	public Response createCliente(Cliente cliente, @Context UriInfo uriInfo) {
 
-        Response.ResponseBuilder builder = null;
+		Response.ResponseBuilder builder = null;
 
-		try{
+		try {
 			clienteService.addCliente(cliente);
-            // Create an "ok" response
+			// Create an "ok" response
 
-	        UriBuilder uribuilder = uriInfo.getAbsolutePathBuilder();
-	        uribuilder.path(Long.toString(cliente.getId()));
-			
+			UriBuilder uribuilder = uriInfo.getAbsolutePathBuilder();
+			uribuilder.path(Long.toString(cliente.getId()));
+
 			builder = Response.created(uribuilder.build()).entity(cliente);
-        } catch (Exception e) {
-            // Handle generic exceptions
-            Map<String, String> responseObj = new HashMap<>();
-            responseObj.put("error", e.getMessage());
-            builder = Response.status(Response.Status.BAD_REQUEST).entity(responseObj);
-        }
+		} catch (Exception e) {
+			// Handle generic exceptions
+			Map<String, String> responseObj = new HashMap<>();
+			responseObj.put("error", e.getMessage());
+			builder = Response.status(Response.Status.BAD_REQUEST).entity(responseObj);
+		}
 
-        return builder.build();
+		return builder.build();
 	}
-	
+
+	@DELETE
+	@Path("/{id:[0-9][0-9]*}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteCliente(@PathParam("id") long id) {
+		Response.ResponseBuilder builder = null;
+
+		try {
+			Cliente c = clienteService.findByID(id);
+			// Create an "ok" response
+
+			clienteService.remove(c);
+
+			builder = Response.noContent();
+		} catch (Exception e) {
+			// Handle generic exceptions
+			Map<String, String> responseObj = new HashMap<>();
+			responseObj.put("error", e.getMessage());
+			builder = Response.status(Response.Status.BAD_REQUEST).entity(responseObj);
+		}
+
+		return builder.build();
+	}
+
+	@DELETE
+	@Path("/all")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteAllClientes() {
+		Response.ResponseBuilder builder = null;
+
+		try {
+			builder = Response.ok(clienteService.removeAll());
+		} catch (Exception e) {
+			// Handle generic exceptions
+			Map<String, String> responseObj = new HashMap<>();
+			responseObj.put("error", e.getMessage());
+			builder = Response.status(Response.Status.BAD_REQUEST).entity(responseObj);
+		}
+
+		return builder.build();
+	}
 }

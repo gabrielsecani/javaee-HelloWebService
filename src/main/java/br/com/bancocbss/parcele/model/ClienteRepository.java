@@ -6,6 +6,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -57,5 +58,21 @@ public class ClienteRepository {
 	public void add(Cliente cliente) throws Exception {
 		log.info("Registering " + cliente.getNome());
 		em.persist(cliente);
+		em.flush();
+	}
+
+	public void remove(Cliente c) {
+		log.info("Removing "+c.toString());
+		em.remove(c);
+		em.flush();
+	}
+
+	public int removeAll() {
+		log.warn("Removing ALL");
+		CriteriaDelete<Cliente> deleteQuery = em.getCriteriaBuilder().createCriteriaDelete(Cliente.class);
+		deleteQuery.from(Cliente.class);
+		int resultado=em.createQuery(deleteQuery).executeUpdate();
+		em.flush();
+		return resultado;
 	}
 }

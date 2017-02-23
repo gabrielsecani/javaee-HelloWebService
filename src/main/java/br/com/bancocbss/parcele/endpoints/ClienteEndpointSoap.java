@@ -28,4 +28,5 @@ public class ClienteEndpointSoap {
 	public Cliente getCliente(String nome){
 		return clienteRepository.findByNome(nome);
 	}
+	
 }

@@ -48,4 +48,11 @@ public class ClienteService {
 		event.setMessage("Testing email");
 		eventProducer.fire(event);
 	}
+
+	public void remove(Cliente c) {
+		repo.remove(c);
+	}
+	public int removeAll() {
+		return repo.removeAll();
+	}
 }
