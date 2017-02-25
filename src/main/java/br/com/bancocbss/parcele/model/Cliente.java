@@ -9,9 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@Entity(name = "TB_CLIENTE")
+@Entity(name = Cliente._TABLE_NAME)
 @XmlRootElement
 public class Cliente implements Serializable{
+
+    static final String _TABLE_NAME = "TB_CLIENTE";
 
 	@Transient
 	private static final long serialVersionUID = 3060121255979066591L;
@@ -44,6 +46,11 @@ public class Cliente implements Serializable{
 		this.email = email;
 	}
 
+    public Cliente(Long id, String nome) {
+        this.id = id;
+        this.nome = nome;
+    }
+
 	public String getEmail() {
 		return email;
 	}
@@ -58,11 +65,6 @@ public class Cliente implements Serializable{
 
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
-	}
-
-	public Cliente(Long id, String nome) {
-		this.id = id;
-		this.nome = nome;
 	}
 
 	public Long getId() {
@@ -80,5 +82,13 @@ public class Cliente implements Serializable{
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!obj.getClass().equals(this.getClass()))
+            return false;
+        Cliente o = (Cliente) obj;
+        return (this.getNome().equals(o.getNome()) && this.getCpf().equals(o.getCpf()) && this.getEmail().equals(o.getEmail()));
+    }
 
 }
